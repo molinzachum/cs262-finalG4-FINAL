@@ -34,8 +34,8 @@ Route::get('/dashboard', function () {
         })->sum('hours_spent') ?: 0;
 
         $tasks = Task::whereHas('milestone.project', function ($q) {
-            $q->where('created_by', auth()->id());
-        })->with('project')->get();
+    $q->where('created_by', auth()->id());
+})->with(['project', 'timeLogs'])->get();
 
         return view('dashboard.admin', compact('projectsCount', 'tasksCount', 'milestonesCount', 'hoursLogged', 'tasks'));
     } else {
@@ -53,9 +53,8 @@ Route::get('/dashboard', function () {
 
         // Fetch tasks assigned to the member
         $tasks = Task::whereHas('assignments', function ($q) {
-            $q->where('user_id', auth()->id());
-        })->with('project')->get();
-
+    $q->where('user_id', auth()->id());
+})->with(['project', 'timeLogs'])->get();
         return view('dashboard.member', compact('projectsCount', 'tasksCount', 'milestonesCount', 'hoursLogged', 'tasks'));
     }
 })->middleware(['auth', 'verified'])->name('dashboard');

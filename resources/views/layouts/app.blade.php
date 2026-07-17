@@ -53,9 +53,17 @@
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
                                 <button class="flex items-center gap-3 rounded-lg border border-[#D6E5EC] bg-white px-2 py-2 text-left transition hover:bg-[#EEF6FA]">
-                                    <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-[#2F5F73] text-sm font-semibold text-white">
-                                        {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-                                    </span>
+                                    @if (Auth::user()->profile_picture)
+                                        <img
+                                            src="{{ asset('storage/' . Auth::user()->profile_picture) }}"
+                                            alt="{{ Auth::user()->name }}"
+                                            class="h-9 w-9 rounded-lg object-cover"
+                                        >
+                                    @else
+                                        <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-[#2F5F73] text-sm font-semibold text-white">
+                                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                                        </span>
+                                    @endif
                                     <span class="hidden leading-tight sm:block">
                                         <span class="block text-sm font-semibold text-slate-900">{{ Auth::user()->name }}</span>
                                         <span class="block text-xs text-slate-500">{{ Auth::user()->email }}</span>

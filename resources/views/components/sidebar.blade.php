@@ -146,11 +146,21 @@
     </nav>
 
     <div class="border-t border-[#D6E5EC] p-4">
-        <div class="rounded-lg border border-[#D6E5EC] bg-white p-4">
-            <p class="text-sm font-semibold text-slate-900">Quick status</p>
-            <p class="mt-1 text-xs leading-5 text-slate-500">
-                Shared navigation is ready for {{ $role === 1 ? 'admin' : 'member' }} dashboard, projects, milestones, tasks, teams, time logs, and account pages.
-            </p>
-        </div>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button
+                type="submit"
+                class="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-[#E5F0F5] hover:text-slate-950"
+            >
+                <span class="flex h-5 w-5 items-center justify-center text-slate-400">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h3" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16 17l5-5-5-5M21 12H9" />
+                    </svg>
+                </span>
+                <span>Log Out</span>
+            </button>
+        </form>
     </div>
+</aside>
 </aside>

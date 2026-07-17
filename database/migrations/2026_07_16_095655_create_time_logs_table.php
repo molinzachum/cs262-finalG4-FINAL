@@ -8,14 +8,15 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('time_logs', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('task_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->decimal('hours_spent', 5, 2);
-            $table->date('log_date');
-            $table->timestamps();
-        });
+       Schema::create('time_logs', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('task_id')->constrained()->onDelete('cascade');
+    $table->foreignId('user_id')->constrained()->onDelete('cascade');
+    $table->decimal('hours_spent', 5, 2);
+    $table->date('log_date');
+    $table->text('notes')->nullable();
+    $table->timestamps();
+});
     }
 
     public function down(): void

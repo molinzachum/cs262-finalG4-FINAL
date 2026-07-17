@@ -1,73 +1,50 @@
 <x-app-layout>
-    @php
-        $timeLogs = [
-            (object) [
-                'title' => 'Project screen layout',
-                'notes' => 'Created the list, detail, create, and edit UI states.',
-                'project' => (object) ['name' => 'Website Redesign'],
-                'task' => (object) ['title' => 'Frontend screens'],
-                'work_date' => '2026-07-16',
-                'hours' => 2.5,
-            ],
-            (object) [
-                'title' => 'Milestone form review',
-                'notes' => 'Checked fields for status, project, and due date.',
-                'project' => (object) ['name' => 'Client Portal'],
-                'task' => (object) ['title' => 'CRUD form UI'],
-                'work_date' => '2026-07-17',
-                'hours' => 1.25,
-            ],
-        ];
-    @endphp
-
     <x-slot name="header">
-        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-                <p class="text-sm font-medium text-slate-600">Tracking</p>
-                <h1 class="text-2xl font-bold text-slate-950">Time Logs</h1>
-            </div>
-            <a href="#" class="inline-flex items-center justify-center rounded-lg bg-[#2F5F73] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#244B5C]">
-                Create Time Log
-            </a>
+        <div>
+            <p class="text-sm font-medium text-slate-600">Tracking</p>
+            <h1 class="text-2xl font-bold text-slate-950">Time Logs</h1>
         </div>
     </x-slot>
 
-    @if (session('status'))
-        <div class="mb-4 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">{{ session('status') }}</div>
+    @if (session('success'))
+        <div class="mb-4 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+            {{ session('success') }}
+        </div>
     @endif
+
+    <div class="mb-4 rounded-lg border border-[#D6E5EC] bg-white p-4 shadow-sm w-fit">
+        <p class="text-sm text-slate-500">Hours logged this week</p>
+        <p class="mt-1 text-2xl font-bold text-slate-950">{{ number_format($thisWeek, 2) }}h</p>
+    </div>
 
     <section class="overflow-hidden rounded-lg border border-[#D6E5EC] bg-white shadow-sm">
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-slate-200 text-sm">
                 <thead class="bg-[#EEF6FA] text-left text-xs font-semibold uppercase text-slate-500">
                     <tr>
-                        <th class="px-4 py-3">Work</th>
-                        <th class="px-4 py-3">Project</th>
                         <th class="px-4 py-3">Task</th>
+                        <th class="px-4 py-3">Notes</th>
                         <th class="px-4 py-3">Date</th>
                         <th class="px-4 py-3">Hours</th>
-                        <th class="px-4 py-3 text-right">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
-                    @foreach ($timeLogs as $timeLog)
+                    @forelse ($logs as $log)
                         <tr>
                             <td class="px-4 py-4">
-                                <p class="font-semibold text-slate-950">{{ $timeLog->title }}</p>
-                                <p class="mt-1 max-w-md text-slate-500">{{ $timeLog->notes ?: 'No notes.' }}</p>
+                                <a href="{{ route('tasks.show', $log->task) }}" class="font-semibold text-slate-950 hover:text-[#2F5F73]">
+                                    {{ $log->task->title }}
+                                </a>
                             </td>
-                            <td class="px-4 py-4 text-slate-700">{{ $timeLog->project?->name ?: 'No project' }}</td>
-                            <td class="px-4 py-4 text-slate-700">{{ $timeLog->task?->title ?: 'No task' }}</td>
-                            <td class="px-4 py-4 text-slate-700">{{ $timeLog->work_date ?: 'Not set' }}</td>
-                            <td class="px-4 py-4 font-semibold text-slate-900">{{ number_format($timeLog->hours, 2) }}</td>
-                            <td class="px-4 py-4">
-                                <div class="flex justify-end gap-2">
-                                    <a href="#" class="rounded-lg border border-[#D6E5EC] px-3 py-2 font-semibold text-slate-700 hover:bg-[#EEF6FA]">Edit</a>
-                                    <button type="button" class="rounded-lg border border-red-200 px-3 py-2 font-semibold text-red-600 hover:bg-red-50">Delete</button>
-                                </div>
-                            </td>
+                            <td class="px-4 py-4 max-w-md text-slate-500">{{ $log->notes ?: 'No notes.' }}</td>
+                            <td class="px-4 py-4 text-slate-700">{{ $log->log_date->format('M j, Y') }}</td>
+                            <td class="px-4 py-4 font-semibold text-slate-900">{{ number_format($log->hours_spent, 2) }}</td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="4" class="px-4 py-8 text-center text-slate-400">No time logged yet.</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

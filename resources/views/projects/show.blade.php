@@ -5,7 +5,7 @@
                 <p class="text-sm font-medium text-slate-600">Project Details</p>
                 <h1 class="text-2xl font-bold text-slate-950">{{ $project->name }}</h1>
             </div>
-            <a href="#" class="inline-flex items-center justify-center rounded-lg bg-[#2F5F73] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#244B5C]">Edit Project</a>
+            <a href="{{ route('projects.edit', $project) }}" class="inline-flex items-center justify-center rounded-lg bg-[#2F5F73] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#244B5C]">Edit Project</a>
         </div>
     </x-slot>
 

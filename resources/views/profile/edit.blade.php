@@ -1,29 +1,30 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
-            </div>
-
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
-            </div>
-
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <p class="text-sm font-medium text-slate-600">Workspace</p>
+                <h1 class="text-2xl font-bold text-slate-950">Account Settings</h1>
             </div>
         </div>
+    </x-slot>
+
+    <div class="space-y-6">
+        <section class="rounded-lg border border-[#D6E5EC] bg-white p-5 shadow-sm sm:p-6">
+            <div class="max-w-xl">
+                @include('profile.partials.update-profile-information-form')
+            </div>
+        </section>
+
+        <section class="rounded-lg border border-[#D6E5EC] bg-white p-5 shadow-sm sm:p-6">
+            <div class="max-w-xl">
+                @include('profile.partials.update-password-form')
+            </div>
+        </section>
+
+        <section class="rounded-lg border border-[#D6E5EC] bg-white p-5 shadow-sm sm:p-6">
+            <div class="max-w-xl">
+                @include('profile.partials.delete-user-form')
+            </div>
+        </section>
     </div>
 </x-app-layout>

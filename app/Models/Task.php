@@ -52,4 +52,17 @@ class Task extends Model
     {
         return $this->hasMany(TimeLog::class);
     }
+    
+    public function project(): \Illuminate\Database\Eloquent\Relations\HasOneThrough
+{
+    return $this->hasOneThrough(
+        Project::class,
+        Milestone::class,
+        'id', // Foreign key on milestones table...
+        'id', // Foreign key on projects table...
+        'milestone_id', // Local key on tasks table...
+        'project_id' // Local key on milestones table...
+    );
 }
+}
+

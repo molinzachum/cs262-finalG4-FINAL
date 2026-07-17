@@ -6,7 +6,7 @@
                 <h1 class="text-2xl font-bold text-slate-950">Tasks</h1>
             </div>
             <a href="{{ route('tasks.create') }}" class="inline-flex items-center justify-center rounded-lg bg-[#2F5F73] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#244B5C]">
-                Create Task
+               Create Task
             </a>
         </div>
     </x-slot>

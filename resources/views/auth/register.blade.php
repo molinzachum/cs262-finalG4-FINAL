@@ -1,5 +1,5 @@
 <x-auth-layout>
-    <x-slot name="title">Create Account - Milestone</x-slot>
+    <x-slot name="title">Create Account - TaskFlow </x-slot>
 
     <div class="mb-6">
         <h2 class="text-3xl font-bold text-slate-900 mb-1">Create Account</h2>

@@ -1,5 +1,5 @@
 <x-auth-layout>
-    <x-slot name="title">Sign In - Milestone</x-slot>
+    <x-slot name="title">Sign In - TaskFlow </x-slot>
 
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />

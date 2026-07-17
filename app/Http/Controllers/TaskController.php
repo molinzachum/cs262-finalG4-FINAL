@@ -9,21 +9,22 @@ use App\Models\Milestone;
 class TaskController extends Controller
 {
     // Display all tasks
-    public function index()
-    {
-        $tasks = Task::whereHas('milestone.project', function ($query) {
-            $query->where('created_by', auth()->id())
-                ->orWhereHas('members', function ($q) {
-                    $q->where('user_id', auth()->id());
-                });
-        })->with([
-            'assignments.user',
-            'creator'
-        ])->get();
+ public function index()
+{
+    $tasks = Task::whereHas('milestone.project', function ($query) {
+        $query->where('created_by', auth()->id())
+            ->orWhereHas('members', function ($q) {
+                $q->where('user_id', auth()->id());
+            });
+    })->with([
+        'assignments.user',
+        'creator',
+        'milestone.project',
+        'timeLogs',
+    ])->get();
 
-        return view('tasks.index', compact('tasks'));
-    }
-
+    return view('tasks.index', compact('tasks'));
+}
     // Create task
     public function store(Request $request)
     {
@@ -60,25 +61,27 @@ class TaskController extends Controller
 
     // Show single task
     public function show(Task $task)
-    {
-        if ((int) auth()->user()->role !== 1) {
-            $project = $task->milestone->project;
-            $isMember = $project->members()->where('user_id', auth()->id())->exists();
-            $isAssignee = $task->assignments()->where('user_id', auth()->id())->exists();
-            $isCreator = (int) $task->created_by == (int) auth()->id();
+{
+    if ((int) auth()->user()->role !== 1) {
+        $project = $task->milestone->project;
+        $isMember = $project->members()->where('user_id', auth()->id())->exists();
+        $isAssignee = $task->assignments()->where('user_id', auth()->id())->exists();
+        $isCreator = (int) $task->created_by == (int) auth()->id();
 
-            if (!$isMember && !$isAssignee && !$isCreator) {
-                abort(403, 'Unauthorized action.');
-            }
+        if (!$isMember && !$isAssignee && !$isCreator) {
+            abort(403, 'Unauthorized action.');
         }
-
-        $task->load([
-            'assignments.user',
-            'creator'
-        ]);
-
-        return view('tasks.show', compact('task'));
     }
+
+    $task->load([
+        'assignments.user',
+        'milestone.project',
+        'timeLogs',
+    ]);
+
+    return view('tasks.show', compact('task'));
+}
+
 
     // Update task
     public function update(Request $request, Task $task)
@@ -114,8 +117,7 @@ class TaskController extends Controller
             'due_date',
         ]));
 
-        return redirect()->back()->with('status', 'Task updated successfully!');
-    }
+        return redirect()->route('tasks.index')->with('status', 'Task updated successfully!');    }
 
     // Delete task
     public function destroy(Task $task)

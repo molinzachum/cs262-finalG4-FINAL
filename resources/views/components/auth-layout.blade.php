@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $title ?? 'Milestone Auth' }}</title>
+    <title>{{ $title ?? 'TaskFlow' }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -25,22 +25,22 @@
                     <a href="#" class="hover:text-slate-600 transition">Privacy Policy</a>
                     <a href="#" class="hover:text-slate-600 transition">Terms of Service</a>
                 </div>
-                <p>&copy; {{ date('Y') }} CalmPMS Productivity Suite</p>
+                <p>&copy; {{ date('Y') }} TaskFlow</p>
             </div>
         </div>
 
         <div class="hidden lg:flex w-1/2 bg-[#DCE8F2] p-16 flex-col justify-between relative overflow-hidden">
             <div class="flex items-center gap-2 text-slate-900 font-semibold text-xl">
-                <div class="w-7 h-7 bg-slate-900 text-white rounded-md flex items-center justify-center text-sm">⚡</div>
-                <span>Milestone</span>
+                <div class="w-9 h-9 bg-[#2F5F73] text-white rounded-lg flex items-center justify-center text-lg font-bold">T</div>
+                <span>TaskFlow</span>
             </div>
 
             <div class="max-w-lg my-auto">
                 <h1 class="text-4xl lg:text-5xl font-bold text-slate-900 leading-tight mb-6">
-                    Manage every project.<br>Track every task.
+                    One workspace for<br>every project you run.
                 </h1>
                 <p class="text-slate-600 text-base lg:text-lg leading-relaxed">
-                    One system for your entire project lifecycle — from kickoff to delivery. Experience productivity in its purest form.
+                    Plan milestones, assign tasks, track hours, and keep your whole team aligned — all in a single project management system built for how teams actually work.
                 </p>
             </div>
 
