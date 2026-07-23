@@ -45,17 +45,25 @@ class ProjectController extends Controller
             'description' => 'nullable|string',
             'status' => 'nullable|string',
             'start_date' => 'nullable|date',
-            'end_date' => 'nullable|date'
+            'end_date' => 'nullable|date',
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048'
         ]);
 
-        Project::create([
+        $data = [
             'name' => $request->name,
             'description' => $request->description,
             'status' => $request->status ?? 'Active',
             'created_by' => auth()->id(),
             'start_date' => $request->start_date,
-            'end_date' => $request->end_date
-        ]);
+            'end_date' => $request->end_date,
+        ];
+
+        if ($request->hasFile('cover_image')) {
+            // Stores in storage/app/public/covers and returns the path
+            $data['cover_image'] = $request->file('cover_image')->store('covers', 'public');
+        }
+
+        Project::create($data);
 
         return redirect('/projects');
     }
@@ -101,10 +109,21 @@ class ProjectController extends Controller
             'description' => 'nullable|string',
             'status' => 'string',
             'start_date' => 'nullable|date',
-            'end_date' => 'nullable|date'
+            'end_date' => 'nullable|date',
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048'
         ]);
 
-        $project->update($request->all());
+        $data = $request->only(['name', 'description', 'status', 'start_date', 'end_date']);
+
+        if ($request->hasFile('cover_image')) {
+            // Delete old cover image if it exists
+            if ($project->cover_image && \Storage::disk('public')->exists($project->cover_image)) {
+                \Storage::disk('public')->delete($project->cover_image);
+            }
+            $data['cover_image'] = $request->file('cover_image')->store('covers', 'public');
+        }
+
+        $project->update($data);
 
         return redirect('/projects');
     }
