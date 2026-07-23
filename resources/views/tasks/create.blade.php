@@ -36,7 +36,15 @@
 
             <div>
                 <label for="desc" class="block text-sm font-semibold text-slate-700">Description</label>
-                <textarea id="desc" name="desc" rows="4" placeholder="Briefly describe the task goals..." class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-[#7FA8BA] focus:ring-[#7FA8BA] text-sm p-2 border">{{ old('desc') }}</textarea>
+
+                <textarea
+    id="desc"
+    name="desc"
+    class="rich-editor mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-[#7FA8BA] focus:ring-[#7FA8BA] text-sm p-2 border"
+    rows="4"
+    placeholder="Briefly describe the task goals..."
+>{{ old('desc') }}</textarea>
+
                 @error('desc') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
             </div>
 
