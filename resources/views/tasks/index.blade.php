@@ -24,11 +24,11 @@
                     <h2 class="font-bold text-slate-900 text-sm">To-do</h2>
                 </div>
                 <span class="rounded-full bg-slate-200/60 px-2 py-0.5 text-xs font-semibold text-slate-600">
-                    {{ $tasks->where('status', 'To-do')->count() }}
+                    {{ $tasks->where('status', 'To do')->count() }}
                 </span>
             </div>
             <div class="space-y-3 flex-1">
-                @forelse ($tasks->where('status', 'To-do') as $task)
+                @forelse ($tasks->where('status', 'To do') as $task)
                     <x-task-card :task="$task" />
                 @empty
                     <div class="rounded-lg border border-dashed border-[#D6E5EC] bg-white p-6 text-center text-xs text-slate-400">
@@ -46,12 +46,12 @@
                     <h2 class="font-bold text-slate-900 text-sm">In-progress</h2>
                 </div>
                 <span class="rounded-full bg-blue-100/60 px-2 py-0.5 text-xs font-semibold text-blue-600">
-                    {{ $tasks->where('status', 'In-progress')->count() }}
+                    {{ $tasks->where('status', 'In progress')->count() }}
                 </span>
             </div>
             <div class="space-y-3 flex-1">
-                @forelse ($tasks->where('status', 'In-progress') as $task)
-                    <x-task-card :task="$task" />
+                @forelse ($tasks->where('status', 'In progress') as $task)
+                    <x-task-card :task="$task"/>
                 @empty
                     <div class="rounded-lg border border-dashed border-[#D6E5EC] bg-white p-6 text-center text-xs text-slate-400">
                         No tasks in In-progress.

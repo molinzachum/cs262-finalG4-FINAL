@@ -1,31 +1,41 @@
 <x-app-layout>
+    
     @php
         $stats = [
             [
                 'label' => 'My Projects',
                 'value' => $projectsCount,
                 'helper' => 'Projects you belong to',
-                'icon' => 'P'
+                'helper2' => 'Projects completed: ' . $projectsDone,
+                'icon' => 'P',
+                'progress' => $progress['projects'],
             ],
             [
                 'label' => 'My Tasks',
                 'value' => $tasksCount,
                 'helper' => 'Tasks assigned to you',
-                'icon' => 'T'
+                'helper2' => 'Tasks completed: ' . $tasksDone,
+                'icon' => 'T',
+                'progress' => $progress['tasks'],
             ],
             [
                 'label' => 'Milestones',
                 'value' => $milestonesCount,
                 'helper' => 'In your projects',
-                'icon' => 'M'
+                'helper2' => 'Milestones achieved: ' . $milestonesDone,
+                'icon' => 'M',
+                'progress' => $progress['milestones'],
             ],
             [
                 'label' => 'Hours Logged',
                 'value' => $hoursLogged,
                 'helper' => 'Your logged hours',
-                'icon' => 'H'
+                'helper2' => '',
+                'icon' => 'H',
+                'progress' => $progress['hours'] ?? 0,
             ],
         ];
+
 
         $activities = [
             ['title' => 'Project screen layout logged', 'meta' => '2.5 hours added to Time Logs'],
@@ -49,14 +59,17 @@
                         <p class="text-sm font-semibold text-slate-500">{{ $stat['label'] }}</p>
                         <p class="mt-3 text-3xl font-bold text-slate-950">{{ $stat['value'] }}</p>
                     </div>
-                    <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-[#C4D8E2] text-sm font-bold text-[#2F5F73]">
+                    <span
+                        class="flex h-10 w-10 items-center justify-center rounded-lg bg-[#C4D8E2] text-sm font-bold text-[#2F5F73]">
                         {{ $stat['icon'] }}
                     </span>
                 </div>
-                <div class="mt-4 h-1.5 overflow-hidden rounded-full bg-[#EEF6FA]">
-                    <div class="h-full w-2/3 rounded-full bg-[#2F5F73]"></div>
-                </div>
                 <p class="mt-3 text-sm text-slate-500">{{ $stat['helper'] }}</p>
+                <div id="myProgress" class="mt-4 h-1.5 overflow-hidden rounded-full bg-[#EEF6FA]">
+                    <div id="myBar" class="h-full rounded-full bg-[#2F5F73]" style="width: {{ $stat['progress'] }}%;">
+                    </div>
+                </div>
+                <p class="mt-3 text-sm font-bold text-slate-500">{{ $stat['helper2'] }}</p>
             </section>
         @endforeach
     </div>
@@ -73,19 +86,23 @@
                 </div>
 
                 <div class="mt-5 grid gap-3 sm:grid-cols-2">
-                    <a href="{{ route('projects.index') }}" class="rounded-lg border border-[#D6E5EC] bg-[#F8FBFD] p-4 transition hover:border-[#9BBCCA] hover:bg-[#EEF6FA]">
+                    <a href="{{ route('projects.index') }}"
+                        class="rounded-lg border border-[#D6E5EC] bg-[#F8FBFD] p-4 transition hover:border-[#9BBCCA] hover:bg-[#EEF6FA]">
                         <p class="font-semibold text-[#2F5F73]">My Projects</p>
                         <p class="mt-1 text-sm text-slate-500">View and track projects in your workspace.</p>
                     </a>
-                    <a href="{{ route('milestones.index') }}" class="rounded-lg border border-[#D6E5EC] bg-[#F8FBFD] p-4 transition hover:border-[#9BBCCA] hover:bg-[#EEF6FA]">
+                    <a href="{{ route('milestones.index') }}"
+                        class="rounded-lg border border-[#D6E5EC] bg-[#F8FBFD] p-4 transition hover:border-[#9BBCCA] hover:bg-[#EEF6FA]">
                         <p class="font-semibold text-[#2F5F73]">Milestones</p>
                         <p class="mt-1 text-sm text-slate-500">Track project checkpoints and due dates.</p>
                     </a>
-                    <a href="{{ route('timelogs.index') }}" class="rounded-lg border border-[#D6E5EC] bg-[#F8FBFD] p-4 transition hover:border-[#9BBCCA] hover:bg-[#EEF6FA]">
+                    <a href="{{ route('timelogs.index') }}"
+                        class="rounded-lg border border-[#D6E5EC] bg-[#F8FBFD] p-4 transition hover:border-[#9BBCCA] hover:bg-[#EEF6FA]">
                         <p class="font-semibold text-[#2F5F73]">Time Logs</p>
                         <p class="mt-1 text-sm text-slate-500">Review and add work hours.</p>
                     </a>
-                    <a href="{{ route('team.index') }}" class="rounded-lg border border-[#D6E5EC] bg-[#F8FBFD] p-4 transition hover:border-[#9BBCCA] hover:bg-[#EEF6FA]">
+                    <a href="{{ route('team.index') }}"
+                        class="rounded-lg border border-[#D6E5EC] bg-[#F8FBFD] p-4 transition hover:border-[#9BBCCA] hover:bg-[#EEF6FA]">
                         <p class="font-semibold text-[#2F5F73]">Team Members</p>
                         <p class="mt-1 text-sm text-slate-500">View members and roles.</p>
                     </a>
