@@ -9,6 +9,12 @@
         </div>
     </x-slot>
 
+    @if ($project->cover_image)
+        <div class="mb-6 overflow-hidden rounded-lg border border-[#D6E5EC] shadow-sm">
+            <img src="{{ asset('storage/' . $project->cover_image) }}" alt="{{ $project->name }} cover image" class="h-64 w-full object-cover">
+        </div>
+    @endif
+
     <div class="grid gap-6 lg:grid-cols-3">
         <section class="rounded-lg border border-[#D6E5EC] bg-white p-6 shadow-sm lg:col-span-2">
             <h2 class="text-lg font-semibold text-slate-950">Overview</h2>

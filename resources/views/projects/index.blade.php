@@ -19,8 +19,11 @@
 
     <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         @forelse ($projects as $project)
-            <article class="rounded-lg border border-[#D6E5EC] bg-white p-5 shadow-sm flex flex-col justify-between">
-                <div>
+            <article class="rounded-lg border border-[#D6E5EC] bg-white shadow-sm flex flex-col justify-between overflow-hidden">
+                @if ($project->cover_image)
+                    <img src="{{ asset('storage/' . $project->cover_image) }}" alt="{{ $project->name }} cover" class="h-40 w-full object-cover">
+                @endif
+                <div class="p-5">
                     <div class="flex items-start justify-between gap-4">
                         <div>
                             <h2 class="text-lg font-semibold text-slate-950">{{ $project->name }}</h2>
@@ -40,7 +43,7 @@
                         </div>
                     </dl>
                 </div>
-                <div class="mt-5 flex items-center gap-2 border-t border-slate-100 pt-3">
+                <div class="flex items-center gap-2 border-t border-slate-100 pt-3 px-5 pb-5">
                     <a href="{{ route('projects.show', $project) }}" class="rounded-lg border border-[#D6E5EC] px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-[#EEF6FA]">View</a>
                     @if(auth()->user()->role === 1)
                         <a href="{{ route('projects.edit', $project) }}" class="rounded-lg border border-[#D6E5EC] px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-[#EEF6FA]">Edit</a>
