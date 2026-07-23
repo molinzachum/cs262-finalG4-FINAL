@@ -3,38 +3,46 @@
         $stats = [
             [
                 'label' => 'Active Projects',
-                'value' => $projectsCount,
+                'value' => $projectsActive,
                 'helper' => 'Projects you created',
-                'icon' => 'P'
+                'helper2' => 'Total Projects: ' . $projectsCount,
+                'icon' => 'P',
+                'progress' => $progress['projects'],
             ],
             [
                 'label' => 'Open Tasks',
                 'value' => $tasksCount,
                 'helper' => 'Pending in your projects',
-                'icon' => 'T'
+                'helper2' => 'Total tasks: ' . $tasksCount,
+                'icon' => 'T',
+                'progress' => $progress['tasks'],
             ],
             [
-                'label' => 'Milestones',
+                'label' => 'Milestones',                                                                     
                 'value' => $milestonesCount,
                 'helper' => 'Milestones tracking',
-                'icon' => 'M'
+                'helper2' => 'In progress: ' . $milestonesInProgress,
+                'icon' => 'M',
+                'progress' => $progress['milestones'],
             ],
             [
                 'label' => 'Hours Logged',
                 'value' => $hoursLogged,
                 'helper' => 'Total team hours spent',
-                'icon' => 'H'
-            ],
+                'helper2' => '',
+                'icon' => 'H',
+                'progress' => $progress['hours'] ?? 0,
+            ],         
         ];
 
         $activities = [
             ['title' => 'Website Redesign updated', 'meta' => 'Project status moved to In progress'],
-            ['title' => 'Wireframe Approval created', 'meta' => 'Milestone due July 20'],
+            ['title' => 'Wireframe Approval created', 'meta' => 'Milestone due July 20'],      
             ['title' => 'Project screen layout logged', 'meta' => '2.5 hours added to Time Logs'],
         ];
     @endphp
 
-    <x-slot name="header">
+    <x-slot name="header">                     
         <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
                 <p class="text-sm font-medium text-slate-600">Overview</p>
@@ -58,10 +66,12 @@
                         {{ $stat['icon'] }}
                     </span>
                 </div>
-                <div class="mt-4 h-1.5 overflow-hidden rounded-full bg-[#EEF6FA]">
-                    <div class="h-full w-2/3 rounded-full bg-[#2F5F73]"></div>
-                </div>
                 <p class="mt-3 text-sm text-slate-500">{{ $stat['helper'] }}</p>
+                <div id="myProgress" class="mt-4 h-1.5 overflow-hidden rounded-full bg-[#EEF6FA]">
+                    <div id="myBar" class="h-full rounded-full bg-[#2F5F73]" style="width: {{ $stat['progress'] }}%;">
+                    </div>
+                </div>
+                <p class="mt-3 text-sm font-bold text-slate-500">{{ $stat['helper2'] }}</p>
             </section>
         @endforeach
     </div>

@@ -48,18 +48,18 @@
        <form method="POST" action="{{ route('tasks.update', $task) }}">
     @csrf
     @method('PATCH')
-    @if ($task->status === 'To-do')
-        <input type="hidden" name="status" value="In-progress">
+    @if ($task->status === 'To do')
+        <input type="hidden" name="status" value="In progress">
         <button type="submit" class="inline-flex items-center justify-center rounded-lg bg-[#2F5F73] px-4 py-2 text-sm font-semibold text-white hover:bg-[#244B5C] transition">
             Start
         </button>
-    @elseif ($task->status === 'In-progress')
+    @elseif ($task->status === 'In progress')
         <input type="hidden" name="status" value="Done">
         <button type="submit" class="inline-flex items-center justify-center rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700 transition">
             Complete
         </button>
     @elseif ($task->status === 'Done')
-        <input type="hidden" name="status" value="To-do">
+        <input type="hidden" name="status" value="To do">
         <button type="submit" class="inline-flex items-center justify-center rounded-lg bg-slate-500 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-600 transition">
             Reopen
         </button>
