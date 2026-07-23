@@ -9,22 +9,24 @@ use App\Models\Milestone;
 class TaskController extends Controller
 {
     // Display all tasks
- public function index()
-{
-    $tasks = Task::whereHas('milestone.project', function ($query) {
-        $query->where('created_by', auth()->id())
-            ->orWhereHas('members', function ($q) {
-                $q->where('user_id', auth()->id());
-            });
-    })->with([
-        'assignments.user',
-        'creator',
-        'milestone.project',
-        'timeLogs',
-    ])->get();
+    public function index()
+    {
+        $tasks = Task::whereHas('milestone.project', function ($query) {
+            $query->where('created_by', auth()->id())
+                ->orWhereHas('members', function ($q) {
+                    $q->where('user_id', auth()->id());
+                });
+        })
+            ->with([
+                'assignments.user',
+                'creator',
+                'milestone.project',
+                'timeLogs',
+            ])
+            ->get();
 
-    return view('tasks.index', compact('tasks'));
-}
+        return view('tasks.index', compact('tasks'));
+    }
     // Create task
     public function store(Request $request)
     {
@@ -50,7 +52,7 @@ class TaskController extends Controller
             'milestone_id' => $request->milestone_id,
             'title' => $request->title,
             'desc' => $request->desc,
-            'status' => 'To-do',
+            'status' => 'To do',
             'priority' => $request->priority ?? 'Medium',
             'due_date' => $request->due_date,
             'created_by' => auth()->id(),
@@ -61,26 +63,26 @@ class TaskController extends Controller
 
     // Show single task
     public function show(Task $task)
-{
-    if ((int) auth()->user()->role !== 1) {
-        $project = $task->milestone->project;
-        $isMember = $project->members()->where('user_id', auth()->id())->exists();
-        $isAssignee = $task->assignments()->where('user_id', auth()->id())->exists();
-        $isCreator = (int) $task->created_by == (int) auth()->id();
+    {
+        if ((int) auth()->user()->role !== 1) {
+            $project = $task->milestone->project;
+            $isMember = $project->members()->where('user_id', auth()->id())->exists();
+            $isAssignee = $task->assignments()->where('user_id', auth()->id())->exists();
+            $isCreator = (int) $task->created_by == (int) auth()->id();
 
-        if (!$isMember && !$isAssignee && !$isCreator) {
-            abort(403, 'Unauthorized action.');
+            if (!$isMember && !$isAssignee && !$isCreator) {
+                abort(403, 'Unauthorized action.');
+            }
         }
+
+        $task->load([
+            'assignments.user',
+            'milestone.project',
+            'timeLogs',
+        ]);
+
+        return view('tasks.show', compact('task'));
     }
-
-    $task->load([
-        'assignments.user',
-        'milestone.project',
-        'timeLogs',
-    ]);
-
-    return view('tasks.show', compact('task'));
-}
 
 
     // Update task
@@ -92,7 +94,7 @@ class TaskController extends Controller
             'milestone_id' => 'sometimes|required|exists:milestones,id',
             'title' => 'sometimes|required|string|max:255',
             'desc' => 'nullable|string',
-            'status' => 'sometimes|required|in:To-do,In-progress,Done',
+            'status' => 'sometimes|required|in:To do,In progress,Done',
             'priority' => 'sometimes|required|string',
             'due_date' => 'nullable|date',
         ]);
@@ -117,7 +119,8 @@ class TaskController extends Controller
             'due_date',
         ]));
 
-        return redirect()->route('tasks.index')->with('status', 'Task updated successfully!');    }
+        return redirect()->route('tasks.index')->with('status', 'Task updated successfully!');
+    }
 
     // Delete task
     public function destroy(Task $task)
