@@ -79,12 +79,8 @@ class ProjectController extends Controller
             }
         }
 
-        $project->load([
-            'milestones.tasks',
-            'members.user'
-        ]);
-
-        return view('projects.show', compact('project'));
+        $project->load(['milestones.tasks', 'members.user']);
+    return view('projects.show', compact('project'));
     }
 
     // Show edit project form
