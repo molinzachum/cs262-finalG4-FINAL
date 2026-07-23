@@ -1,3 +1,8 @@
+
+@php
+    use Illuminate\Support\Str;
+@endphp
+
 <x-app-layout>
     <x-slot name="header">
         <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -32,7 +37,16 @@
                         <tr>
                             <td class="px-4 py-4">
                                 <p class="font-semibold text-slate-950">{{ $milestone->title }}</p>
-                                <p class="mt-1 max-w-md text-xs text-slate-500">{{ $milestone->description ?: 'No description.' }}</p>
+                                <p class="mt-1 max-w-md text-xs text-slate-500">
+    {{
+        $milestone->description
+            ? Str::limit(
+                html_entity_decode(strip_tags($milestone->description)),
+                100
+            )
+            : 'No description.'
+    }}
+</p>
                             </td>
                             <td class="px-4 py-4 text-slate-700 font-medium">{{ $milestone->project?->name ?: 'No project' }}</td>
                             <td class="px-4 py-4">
