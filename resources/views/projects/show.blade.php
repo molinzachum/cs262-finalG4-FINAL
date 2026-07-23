@@ -18,7 +18,14 @@
     <div class="grid gap-6 lg:grid-cols-3">
         <section class="rounded-lg border border-[#D6E5EC] bg-white p-6 shadow-sm lg:col-span-2">
             <h2 class="text-lg font-semibold text-slate-950">Overview</h2>
-            <p class="mt-3 text-sm leading-6 text-slate-600">{{ $project->description ?: 'No description yet.' }}</p>
+
+           <div class="rte-content mt-3 text-sm leading-6 text-slate-600">
+    @if($project->description)
+        {!! $project->description !!}
+    @else
+        No description yet.
+    @endif
+</div>
 
             @if($project->tasks && $project->tasks->count() > 0)
                 <h3 class="text-md font-semibold text-slate-950 mt-6 mb-3">Tasks</h3>

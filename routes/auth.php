@@ -25,11 +25,11 @@ Route::middleware('guest')->group(function () {
 
     Route::get('auth/{provider}/redirect', [OAuthController::class, 'redirect'])
         ->name('oauth.redirect')
-        ->whereIn('provider', ['google', 'github']); 
+        ->whereIn('provider', ['google']); 
 
     Route::get('auth/{provider}/callback', [OAuthController::class, 'callback'])
         ->name('oauth.callback')
-        ->whereIn('provider', ['google', 'github']);
+        ->whereIn('provider', ['google']);
     // =========================================================
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])

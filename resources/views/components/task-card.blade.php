@@ -15,9 +15,22 @@
             <h3 class="font-semibold text-slate-900 leading-snug line-clamp-1">
                 {{ $task->title }}
             </h3>
-            <p class="mt-1 text-sm text-slate-500 line-clamp-2">
-                {{ $task->desc ?? 'No description provided.' }}
-            </p>
+
+           @php
+    use Illuminate\Support\Str;
+
+    $preview = $task->desc
+        ? Str::limit(
+            html_entity_decode(strip_tags($task->desc)),
+            100
+        )
+        : 'No description provided.';
+@endphp
+
+<p class="mt-1 text-sm text-slate-500 line-clamp-2">
+    {{ $preview }}
+</p>
+
         </div>
         <p class="mt-2 text-xs font-medium text-slate-400">
             {{ number_format($task->timeLogs->sum('hours_spent'), 2) }} hrs logged

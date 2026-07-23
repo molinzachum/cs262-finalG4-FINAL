@@ -10,7 +10,7 @@ use App\Http\Controllers\ProjectMemberController;
 use App\Http\Controllers\Admin\UserController;
 use App\Models\Task;
 use App\Http\Controllers\TimeLogController;
-
+use App\Http\Controllers\CKEditorController;
 
 Route::get('/', function () {
     if (auth()->check()) {
@@ -94,6 +94,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/project-members/{member}',
         [ProjectMemberController::class, 'destroy']
     );
+
+    Route::post('/ckeditor/upload', [CKEditorController::class, 'upload'])
+    ->name('ckeditor.upload');
 
     // Profile Routes
     Route::get('/profile',

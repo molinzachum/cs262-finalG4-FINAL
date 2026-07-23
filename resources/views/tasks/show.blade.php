@@ -57,7 +57,14 @@
 
                 <h2 class="text-lg font-semibold text-slate-950 mb-3">Description</h2>
                 <div class="text-sm leading-6 text-slate-600 whitespace-pre-line">
-                    {{ $task->desc ?: 'No description provided.' }}
+
+                   <div class="mt-3 prose max-w-none prose-slate">
+    @if($task->desc)
+        {!! $task->desc !!}
+    @else
+        No description yet.
+    @endif
+</div>
                 </div>
 
                 <div class="mt-6 border-t border-slate-100 pt-6 grid grid-cols-2 gap-4 text-sm">
