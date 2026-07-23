@@ -43,8 +43,8 @@
             <div>
                 <label for="status" class="block text-sm font-semibold text-slate-700">Status</label>
                 <select id="status" name="status" required class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-[#7FA8BA] focus:ring-[#7FA8BA] text-sm p-2 border bg-white">
-                    <option value="To-do" @selected(old('status', $task->status) == 'To-do')>To-do</option>
-                    <option value="In-progress" @selected(old('status', $task->status) == 'In-progress')>In-progress</option>
+                    <option value="To do" @selected(old('status', $task->status) == 'To do')>To-do</option>
+                    <option value="In progress" @selected(old('status', $task->status) == 'In progress')>In-progress</option>
                     <option value="Done" @selected(old('status', $task->status) == 'Done')>Done</option>
                 </select>
                 @error('status') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
