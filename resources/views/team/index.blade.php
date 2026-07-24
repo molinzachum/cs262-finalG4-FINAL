@@ -50,9 +50,13 @@
                             <tr>
                                 <td class="px-5 py-4">
                                     <div class="flex items-center gap-3">
-                                        <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-[#C4D8E2] text-sm font-bold text-slate-800">
-                                            {{ strtoupper(substr($member->user->name, 0, 1)) }}
-                                        </span>
+                                        @if($member->user->profile_picture)
+                                            <img src="{{ asset('storage/' . $member->user->profile_picture) }}" alt="{{ $member->user->name }} profile picture" class="h-10 w-10 rounded-lg object-cover">
+                                        @else
+                                            <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-[#C4D8E2] text-sm font-bold text-slate-800">
+                                                {{ strtoupper(substr($member->user->name, 0, 1)) }}
+                                            </span>
+                                        @endif
                                         <div>
                                             <p class="font-semibold text-slate-950">{{ $member->user->name }}</p>
                                             <p class="text-slate-500 text-xs">{{ $member->user->email }}</p>

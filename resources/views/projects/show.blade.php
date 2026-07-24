@@ -97,9 +97,13 @@
                 <div class="mt-4 space-y-3">
                     @forelse ($project->members as $member)
                         <div class="flex items-center gap-3 text-sm">
-                            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#C4D8E2] text-xs font-bold text-slate-800">
-                                {{ strtoupper(substr($member->user->name, 0, 1)) }}
-                            </span>
+                            @if($member->user->profile_picture)
+                                <img src="{{ asset('storage/' . $member->user->profile_picture) }}" alt="{{ $member->user->name }} profile picture" class="h-8 w-8 rounded-lg object-cover">
+                            @else
+                                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#C4D8E2] text-xs font-bold text-slate-800">
+                                    {{ strtoupper(substr($member->user->name, 0, 1)) }}
+                                </span>
+                            @endif
                             <div class="flex-1">
                                 <p class="font-medium text-slate-900">{{ $member->user->name }}</p>
                                 <p class="text-xs text-slate-500">{{ $member->member_role ?? 'Member' }}</p>
