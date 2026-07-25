@@ -13,7 +13,7 @@
                 'label' => 'Open Tasks',
                 'value' => $tasksCount,
                 'helper' => 'Pending in your projects',
-                'helper2' => 'Total tasks: ' . $tasksCount,
+                'helper2' => 'Total tasks: ' . $tasksTotal,
                 'icon' => 'T',
                 'progress' => $progress['tasks'],
             ],
