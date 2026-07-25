@@ -123,37 +123,41 @@
                             </span>
                             <span class="font-medium text-slate-900">{{ $assignment->user->name }}</span>
                         </div>
-                        <form method="POST" action="/task-assignment/{{ $assignment->id }}"
-                            onsubmit="return confirm('Remove user from task?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit"
-                                class="text-xs font-semibold text-red-600 hover:text-red-800 transition">Remove</button>
-                        </form>
+                        @if(auth()->user()->role === 1)
+                            <form method="POST" action="/task-assignment/{{ $assignment->id }}"
+                                onsubmit="return confirm('Remove user from task?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="text-xs font-semibold text-red-600 hover:text-red-800 transition">Remove</button>
+                            </form>
+                        @endif
                     </div>
                     @empty
                     <p class="text-xs text-slate-400">No users assigned to this task.</p>
                     @endforelse
                 </div>
 
-                <!-- Assign User Form -->
-                <div class="mt-5 pt-4 border-t border-slate-100">
-                    <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Assign User</h4>
-                    <form method="POST" action="/tasks/{{ $task->id }}/assign" class="flex gap-2">
-                        @csrf
-                        <select name="user_id" required
-                            class="block w-full rounded-lg border-slate-300 shadow-sm focus:border-[#7FA8BA] focus:ring-[#7FA8BA] text-xs p-1.5 border bg-white">
-                            <option value="">-- Select User --</option>
-                            @foreach($users as $user)
-                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                            @endforeach
-                        </select>
-                        <button type="submit"
-                            class="rounded-lg bg-slate-900 text-white px-3 py-1.5 text-xs font-semibold hover:bg-slate-800 transition">
-                            Add
-                        </button>
-                    </form>
-                </div>
+                @if(auth()->user()->role === 1)
+                    <!-- Assign User Form -->
+                    <div class="mt-5 pt-4 border-t border-slate-100">
+                        <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Assign User</h4>
+                        <form method="POST" action="/tasks/{{ $task->id }}/assign" class="flex gap-2">
+                            @csrf
+                            <select name="user_id" required
+                                class="block w-full rounded-lg border-slate-300 shadow-sm focus:border-[#7FA8BA] focus:ring-[#7FA8BA] text-xs p-1.5 border bg-white">
+                                <option value="">-- Select User --</option>
+                                @foreach($users as $user)
+                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+                            <button type="submit"
+                                class="rounded-lg bg-slate-900 text-white px-3 py-1.5 text-xs font-semibold hover:bg-slate-800 transition">
+                                Add
+                            </button>
+                        </form>
+                    </div>
+                @endif
             </div>
 
             <!-- Log Time -->

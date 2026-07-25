@@ -34,11 +34,11 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/tasks/{task}/assign',
         [TaskAssignmentController::class, 'store']
-    );
+    )->middleware('admin');
 
     Route::delete('/task-assignment/{assignment}',
         [TaskAssignmentController::class, 'destroy']
-    );
+    )->middleware('admin');
 
     // Project Routes
     Route::resource('projects', ProjectController::class);
@@ -50,15 +50,15 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/projects/{project}/members',
         [ProjectMemberController::class, 'store']
-    );
+    )->middleware('admin');
 
     Route::patch('/project-members/{member}',
         [ProjectMemberController::class, 'update']
-    );
+    )->middleware('admin');
 
     Route::delete('/project-members/{member}',
         [ProjectMemberController::class, 'destroy']
-    );
+    )->middleware('admin');
 
     Route::post('/ckeditor/upload', [CKEditorController::class, 'upload'])
     ->name('ckeditor.upload');
